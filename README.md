@@ -56,17 +56,16 @@ $ git commit -m "add 1.txt"
 ```
 * 2)
 ```
-$ git commit -am "some changes to .gitpod.yml"
-[main cdea68ad] some changes to .gitpod.yml
- 2 files changed, 1 insertion(+), 1 deletion(-)
- delete mode 100644 1.txt
+$ git commit -am "some changes to gitpod.yml"
+[tonai-addons 427637d] some changes to gitpod.yml
+ 1 file changed, 1 insertion(+)
 ```
 * 3)
 ```
 $ git add .
 $ git commit -m "all"
-[tonai-addons 4c40821] all
- 3 files changed, 1 insertion(+)
+[tonai-addons 208bbcd] all
+ 2 files changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 2.txt
  create mode 100644 3.txt
 ```
@@ -88,9 +87,9 @@ nothing added to commit but untracked files present (use "git add" to track)
 $ git add lab1.txt
 
 $ git commit --amend -m "create all modifications and lab1.txt file"
-[tonai-addons 8053bed] create all modifications and lab1.txt file
- Date: Thu Oct 31 02:40:01 2024 +0200
- 4 files changed, 1 insertion(+)
+[tonai-addons f498cdb] create all modifications and lab1.txt file
+ Date: Fri Nov 1 16:56:39 2024 +0200
+ 3 files changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 2.txt
  create mode 100644 3.txt
  create mode 100644 lab1.txt
@@ -103,3 +102,80 @@ Your branch is ahead of 'origin/tonai-addons' by 2 commits.
 nothing to commit, working tree clean
 ```
 Кількість нових комітів не змінилась, але змінилось наповнення та опис останнього коміту.
+### 4.Об'єднання кількох останніх комітів в один за допомогою git reset.
+Для об'єднання декількох останніх комітів в один, можна попросити гіт відкотитись на N комтів назад, 
+але при цьому зміни залишивши в дереві.
+```
+$ git reset HEAD~3
+Unstaged changes after reset:
+M       .gitpod.yml
+
+$ git status
+On branch tonai-addons
+Your branch is up to date with 'origin/tonai-addons'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   .gitpod.yml
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        1.txt
+        2.txt
+        3.txt
+        lab1.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+Гіт скасував три останні коміти, але залишив на диску збереженні в них зміни.
+HEAD~N -- адресує N-ний коміт назад від поточної голови. Тобто HEAD~1 (або скорочено для одного
+коміту HEAD~) адресує попередній коміт, HEAD~3 адресує третій коміт назад від поточного.
+### 5.Видалення файлів.
+Скористаємось `git rm`, вона одразу видалить файл з файлової системи і додасть факт видалення файлу до індексу.
+І закомітимо зміни.
+```
+$ git rm lab1.txt
+rm 'lab1.txt'
+$ git status -uno 
+On branch tonai-addons
+Your branch is ahead of 'origin/tonai-addons' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    lab1.txt
+
+Untracked files not listed (use -u option to show untracked files)
+
+$ git commit -m "delete lab1.txt"
+[tonai-addons 2b942f2] delete lab1.txt
+ 2 files changed, 1 insertion(+)
+ delete mode 100644 lab1.txt
+```
+### 6.Переміщення файлів.
+Скористаємось `git mv`, вона одразу перемістить файл з файлової системи і додасть факт видалення 
+старого файлу і додавання нового до індексу.
+І закомітимо зміни.
+```
+$ git mv 4.txt 4new.txt
+
+$ git status -uno
+On branch tonai-addons
+Your branch is ahead of 'origin/tonai-addons' by 6 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        renamed:    4.txt -> 4new.txt
+
+Untracked files not listed (use -u option to show untracked files)
+
+$ git commit -m "rename 4.txt to 4new.txt"
+[tonai-addons 0c87082] rename 4.txt to 4new.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename 4.txt => 4new.txt (100%)
+```
+### 7.Гілкування.
+# 7.1 Створення 3-ох гілок.
+
