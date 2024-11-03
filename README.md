@@ -58,7 +58,6 @@ $ du -sh ./*/.git
 
 Створено три файли `1.txt`, `2.txt`, `3.txt`, а також змінено вміст файлу `.gitpod.yml`
 Демонструємо різні способи додавання файлів до індексу та різні способи вказання повідомлення коміту.
-1)
 ```
 $ git add 1.txt
 $ git commit -m "add 1.txt"
@@ -66,13 +65,11 @@ $ git commit -m "add 1.txt"
  1 file changed, 1 insertion(+)
  create mode 100644 1.txt
 ```
-2)
 ```
 $ git commit -am "some changes to gitpod.yml"
 [tonai-addons 427637d] some changes to gitpod.yml
  1 file changed, 1 insertion(+)
 ```
-3)
 ```
 $ git add .
 $ git commit -m "all"
